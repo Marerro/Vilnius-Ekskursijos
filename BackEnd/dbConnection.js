@@ -1,0 +1,24 @@
+const postgres = require('postgres');
+const env = require('dotenv');
+
+env.config();
+
+const sql = postgres({
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    database: process.env.DB_NAME,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASS
+})
+
+const testConnection = async () => {
+    try {
+        await sql`SELECT 1 AS result`
+        console.log("Connected to database successfully");
+    } catch (error) {
+        console.log("Connection to database failed", error.message)
+        throw error; // re-throw error in server file
+    }
+}
+
+module.exports = {sql, testConnection};

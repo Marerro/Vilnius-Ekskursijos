@@ -1,0 +1,95 @@
+-----------------------------------------------------
+
+ekskursijos - 
+id
+pavadinimas,
+nuorauka,
+trukme,
+vertinimas,
+kaina,
+
+-----------------------------------------------------
+
+
+ekskursiju_kategorijos
+id
+pavadinimas
+
+
+-----------------------------------------------------
+
+tarpine lentele
+ekskursiju_kategorijos
+ekskursijos_id
+kategorijos_id
+
+CREATE TABLE ekskursiju_kategorijos (
+ekskursijos_id INT NOT NULL,
+kategorijos_id INT NOT NULL,
+FOREIGN KEY (ekskursijos_id) REFERENCES ekskursijos (id),
+FOREIGN KEY (kategorijos_id) REFERENCES kategorijos (id)
+)
+
+-----------------------------------------------------
+
+vartotojai
+id
+vardas
+email
+
+CREATE TABLE vartotojai (
+id SERIAL PRIMARY KEY,
+vardas VARCHAR(255),
+email VARCHAR(255)
+)
+
+-----------------------------------------------------
+
+user_secret HERE.
+
+vartotoju_informacija - db
+user_id
+password
+
+
+CREATE TABLE vartotoju_informacija (
+vartotojo_id INT NOT NULL,
+password VARCHAR(255),
+FOREIGN KEY (vartotojo_id) REFERENCES vartotojai(id)
+)
+
+-----------------------------------------------------
+
+Ekskursiju_datos
+id PRIMARY
+ekskursijos_id
+data
+
+
+CREATE TABLE ekskursiju_datos (
+id SERIAL PRIMARY KEY,
+ekskursijos_id INT,
+data DATE,
+FOREIGN KEY (ekskursijos_id) REFERENCES ekskursijos(id)
+)
+
+-----------------------------------------------------
+
+tarpine lentele
+vartotoju_ekskursijos
+ekskursijos_datos_id
+vartotojo_id
+ivertinimas
+komentaras
+
+
+CREATE TABLE vartotoju_ekskursijos (
+id SERIAL PRIMARY KEY,
+ekskursiju_datos_id INT,
+vartotojo_id INT,
+ivertinimas INT,
+komentaras VARCHAR(255),
+FOREIGN KEY (ekskursiju_datos_id) REFERENCES ekskursiju_datos(id),
+FOREIGN KEY (vartotojo_id) REFERENCES vartotojai(id)
+)
+

@@ -1,0 +1,501 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 17.2
+-- Dumped by pg_dump version 17.1
+
+-- Started on 2025-02-20 23:05:03
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 218 (class 1259 OID 17111)
+-- Name: ekskursijos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.ekskursijos (
+    id integer NOT NULL,
+    pavadinimas character varying(255),
+    nuotrauka character varying(255),
+    trukme text,
+    vertinimas integer,
+    kaina integer
+);
+
+
+ALTER TABLE public.ekskursijos OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1259 OID 17110)
+-- Name: ekskursijos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.ekskursijos_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.ekskursijos_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 4906 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: ekskursijos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.ekskursijos_id_seq OWNED BY public.ekskursijos.id;
+
+
+--
+-- TOC entry 226 (class 1259 OID 17196)
+-- Name: ekskursiju_datos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.ekskursiju_datos (
+    id integer NOT NULL,
+    ekskursijos_id integer,
+    data date
+);
+
+
+ALTER TABLE public.ekskursiju_datos OWNER TO postgres;
+
+--
+-- TOC entry 225 (class 1259 OID 17195)
+-- Name: ekskursiju_datos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.ekskursiju_datos_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.ekskursiju_datos_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 4907 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: ekskursiju_datos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.ekskursiju_datos_id_seq OWNED BY public.ekskursiju_datos.id;
+
+
+--
+-- TOC entry 221 (class 1259 OID 17165)
+-- Name: ekskursiju_kategorijos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.ekskursiju_kategorijos (
+    ekskursijos_id integer NOT NULL,
+    kategorijos_id integer NOT NULL
+);
+
+
+ALTER TABLE public.ekskursiju_kategorijos OWNER TO postgres;
+
+--
+-- TOC entry 220 (class 1259 OID 17159)
+-- Name: kategorijos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.kategorijos (
+    id integer NOT NULL,
+    pavadinimas character varying(255)
+);
+
+
+ALTER TABLE public.kategorijos OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 17158)
+-- Name: kategorijos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.kategorijos_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.kategorijos_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 4908 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: kategorijos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.kategorijos_id_seq OWNED BY public.kategorijos.id;
+
+
+--
+-- TOC entry 223 (class 1259 OID 17179)
+-- Name: vartotojai; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.vartotojai (
+    id integer NOT NULL,
+    vardas character varying(255),
+    email character varying(255),
+    roles character varying(50)
+);
+
+
+ALTER TABLE public.vartotojai OWNER TO postgres;
+
+--
+-- TOC entry 222 (class 1259 OID 17178)
+-- Name: vartotojai_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.vartotojai_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.vartotojai_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 4909 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: vartotojai_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.vartotojai_id_seq OWNED BY public.vartotojai.id;
+
+
+--
+-- TOC entry 228 (class 1259 OID 17208)
+-- Name: vartotoju_ekskursijos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.vartotoju_ekskursijos (
+    id integer NOT NULL,
+    ekskursiju_datos_id integer,
+    vartotojo_id integer,
+    ivertinimas integer,
+    komentaras character varying(255)
+);
+
+
+ALTER TABLE public.vartotoju_ekskursijos OWNER TO postgres;
+
+--
+-- TOC entry 227 (class 1259 OID 17207)
+-- Name: vartotoju_ekskursijos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.vartotoju_ekskursijos_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.vartotoju_ekskursijos_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 4910 (class 0 OID 0)
+-- Dependencies: 227
+-- Name: vartotoju_ekskursijos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.vartotoju_ekskursijos_id_seq OWNED BY public.vartotoju_ekskursijos.id;
+
+
+--
+-- TOC entry 224 (class 1259 OID 17187)
+-- Name: vartotoju_informacija; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.vartotoju_informacija (
+    vartotojo_id integer NOT NULL,
+    password character varying(255)
+);
+
+
+ALTER TABLE public.vartotoju_informacija OWNER TO postgres;
+
+--
+-- TOC entry 4723 (class 2604 OID 17114)
+-- Name: ekskursijos id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ekskursijos ALTER COLUMN id SET DEFAULT nextval('public.ekskursijos_id_seq'::regclass);
+
+
+--
+-- TOC entry 4726 (class 2604 OID 17199)
+-- Name: ekskursiju_datos id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ekskursiju_datos ALTER COLUMN id SET DEFAULT nextval('public.ekskursiju_datos_id_seq'::regclass);
+
+
+--
+-- TOC entry 4724 (class 2604 OID 17162)
+-- Name: kategorijos id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.kategorijos ALTER COLUMN id SET DEFAULT nextval('public.kategorijos_id_seq'::regclass);
+
+
+--
+-- TOC entry 4725 (class 2604 OID 17182)
+-- Name: vartotojai id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vartotojai ALTER COLUMN id SET DEFAULT nextval('public.vartotojai_id_seq'::regclass);
+
+
+--
+-- TOC entry 4727 (class 2604 OID 17211)
+-- Name: vartotoju_ekskursijos id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vartotoju_ekskursijos ALTER COLUMN id SET DEFAULT nextval('public.vartotoju_ekskursijos_id_seq'::regclass);
+
+
+--
+-- TOC entry 4890 (class 0 OID 17111)
+-- Dependencies: 218
+-- Data for Name: ekskursijos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4898 (class 0 OID 17196)
+-- Dependencies: 226
+-- Data for Name: ekskursiju_datos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4893 (class 0 OID 17165)
+-- Dependencies: 221
+-- Data for Name: ekskursiju_kategorijos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4892 (class 0 OID 17159)
+-- Dependencies: 220
+-- Data for Name: kategorijos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4895 (class 0 OID 17179)
+-- Dependencies: 223
+-- Data for Name: vartotojai; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.vartotojai (id, vardas, email, roles) VALUES (4, 'Jonas', 'emailtest@gmail.com', NULL);
+INSERT INTO public.vartotojai (id, vardas, email, roles) VALUES (5, 'Jonas', 'emailtest@gmail.com', 'user');
+
+
+--
+-- TOC entry 4900 (class 0 OID 17208)
+-- Dependencies: 228
+-- Data for Name: vartotoju_ekskursijos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 4896 (class 0 OID 17187)
+-- Dependencies: 224
+-- Data for Name: vartotoju_informacija; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.vartotoju_informacija (vartotojo_id, password) VALUES (4, '$argon2id$v=19$m=65536,t=3,p=4$5zNP/wSb5jRrXaxatnqJww$h12G2tqDlMfC8kzlH1u26GjsCdt7MW43hgfyl1FaKXE');
+INSERT INTO public.vartotoju_informacija (vartotojo_id, password) VALUES (5, '$argon2id$v=19$m=65536,t=3,p=4$9hewT4o23iThNlZp/PGV0w$c+vZw57Kdf9AePuX7BD4MQdL5YKCYeZhv8GG1iTQ34g');
+
+
+--
+-- TOC entry 4911 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: ekskursijos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.ekskursijos_id_seq', 1, false);
+
+
+--
+-- TOC entry 4912 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: ekskursiju_datos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.ekskursiju_datos_id_seq', 1, false);
+
+
+--
+-- TOC entry 4913 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: kategorijos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.kategorijos_id_seq', 1, false);
+
+
+--
+-- TOC entry 4914 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: vartotojai_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.vartotojai_id_seq', 5, true);
+
+
+--
+-- TOC entry 4915 (class 0 OID 0)
+-- Dependencies: 227
+-- Name: vartotoju_ekskursijos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.vartotoju_ekskursijos_id_seq', 1, false);
+
+
+--
+-- TOC entry 4729 (class 2606 OID 17118)
+-- Name: ekskursijos ekskursijos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ekskursijos
+    ADD CONSTRAINT ekskursijos_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4735 (class 2606 OID 17201)
+-- Name: ekskursiju_datos ekskursiju_datos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ekskursiju_datos
+    ADD CONSTRAINT ekskursiju_datos_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4731 (class 2606 OID 17164)
+-- Name: kategorijos kategorijos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.kategorijos
+    ADD CONSTRAINT kategorijos_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4733 (class 2606 OID 17186)
+-- Name: vartotojai vartotojai_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vartotojai
+    ADD CONSTRAINT vartotojai_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4737 (class 2606 OID 17213)
+-- Name: vartotoju_ekskursijos vartotoju_ekskursijos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vartotoju_ekskursijos
+    ADD CONSTRAINT vartotoju_ekskursijos_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4741 (class 2606 OID 17202)
+-- Name: ekskursiju_datos ekskursiju_datos_ekskursijos_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ekskursiju_datos
+    ADD CONSTRAINT ekskursiju_datos_ekskursijos_id_fkey FOREIGN KEY (ekskursijos_id) REFERENCES public.ekskursijos(id);
+
+
+--
+-- TOC entry 4738 (class 2606 OID 17168)
+-- Name: ekskursiju_kategorijos ekskursiju_kategorijos_ekskursijos_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ekskursiju_kategorijos
+    ADD CONSTRAINT ekskursiju_kategorijos_ekskursijos_id_fkey FOREIGN KEY (ekskursijos_id) REFERENCES public.ekskursijos(id);
+
+
+--
+-- TOC entry 4739 (class 2606 OID 17173)
+-- Name: ekskursiju_kategorijos ekskursiju_kategorijos_kategorijos_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ekskursiju_kategorijos
+    ADD CONSTRAINT ekskursiju_kategorijos_kategorijos_id_fkey FOREIGN KEY (kategorijos_id) REFERENCES public.kategorijos(id);
+
+
+--
+-- TOC entry 4742 (class 2606 OID 17214)
+-- Name: vartotoju_ekskursijos vartotoju_ekskursijos_ekskursiju_datos_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vartotoju_ekskursijos
+    ADD CONSTRAINT vartotoju_ekskursijos_ekskursiju_datos_id_fkey FOREIGN KEY (ekskursiju_datos_id) REFERENCES public.ekskursiju_datos(id);
+
+
+--
+-- TOC entry 4743 (class 2606 OID 17219)
+-- Name: vartotoju_ekskursijos vartotoju_ekskursijos_vartotojo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vartotoju_ekskursijos
+    ADD CONSTRAINT vartotoju_ekskursijos_vartotojo_id_fkey FOREIGN KEY (vartotojo_id) REFERENCES public.vartotojai(id);
+
+
+--
+-- TOC entry 4740 (class 2606 OID 17190)
+-- Name: vartotoju_informacija vartotoju_informacija_vartotojo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vartotoju_informacija
+    ADD CONSTRAINT vartotoju_informacija_vartotojo_id_fkey FOREIGN KEY (vartotojo_id) REFERENCES public.vartotojai(id);
+
+
+-- Completed on 2025-02-20 23:05:03
+
+--
+-- PostgreSQL database dump complete
+--
+
